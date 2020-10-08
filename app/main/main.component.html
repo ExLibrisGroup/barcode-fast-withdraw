@@ -1,0 +1,13 @@
+<section>
+  <h1>Welcome to delete by barcode</h1>
+</section>
+
+<section>
+  <form >
+    <mat-form-field>
+      <mat-label>Barcode</mat-label>
+      <input matInput name="barcode" [(ngModel)]="barcode" autofocus (keydown.enter)="onDelete()" />
+    </mat-form-field>
+    <button mat-stroked-button color="primary" type="button" (click)="onDelete()">Delete</button>
+  </form>
+</section>
