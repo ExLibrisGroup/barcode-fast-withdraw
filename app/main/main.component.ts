@@ -20,8 +20,7 @@ export class MainComponent {
   override = false;
   holdings = "retain";
   loading: boolean = false;
-  i=134565765;
-
+  barcodesDeleted = [];
   constructor(private restService: CloudAppRestService, private toaster: ToastrService) {}
 
   onDelete() {
@@ -42,6 +41,7 @@ export class MainComponent {
         next: (result) => {
           console.log("final", result),
             this.toaster.success(this.barcode + " successfully withdrawn");
+            this.barcodesDeleted.unshift(this.barcode);
         },
         error: (err: RestErrorResponse) => {
           console.log(err.message),
@@ -52,9 +52,5 @@ export class MainComponent {
           this.barcode = "";
         },
       });
-  }
-  onAdd()
-  {
-
   }
 }
