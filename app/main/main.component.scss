@@ -1,16 +1,21 @@
-section>h1 {
+section > h1 {
   padding: 5px 10px;
   border-radius: 4px;
   margin-top: 10px;
 }
-mat-form-field
-{
+#barcode {
   $width: calc(100% - 90px);
   width: $width;
+  padding-right: 4px;
   max-width: $width;
 }
+#holdings{
+  padding-right: 10px;
+}
 
-
+.spinner {
+  float: left;
+}
 
 textarea {
   padding: 2px;

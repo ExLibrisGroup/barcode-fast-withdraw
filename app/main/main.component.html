@@ -1,13 +1,27 @@
 <section>
   <h1>Welcome to delete by barcode</h1>
 </section>
-
+<ng-template #loading_spinner>
+  <div class="loading-shade">
+    <mat-progress-spinner mode="indeterminate" diameter="50"></mat-progress-spinner>
+  </div>
+</ng-template>
 <section>
-  <form >
-    <mat-form-field>
+  <form *ngIf="!loading; else loading_spinner" #f="ngForm">
+    <mat-form-field id="barcode" appearance="standard" >
       <mat-label>Barcode</mat-label>
       <input matInput name="barcode" [(ngModel)]="barcode" autofocus (keydown.enter)="onDelete()" />
     </mat-form-field>
     <button mat-stroked-button color="primary" type="button" (click)="onDelete()">Delete</button>
+    <mat-form-field  appearance="standard"   id="holdings">
+      <mat-label>Holdings</mat-label>
+      <mat-select name="holdings" [(ngModel)]="holdings" >
+        <mat-option *ngFor="let item of ['retain', 'delete', 'suppress']" [value]="item">{{
+          item | titlecase
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-checkbox name="override" labelPosition="before" [(ngModel)]="override">Override</mat-checkbox>
   </form>
+
 </section>

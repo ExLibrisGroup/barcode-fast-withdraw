@@ -1,27 +1,27 @@
-import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule, getTranslateModule } from '@exlibris/exl-cloudapp-angular-lib';
-import { ToastrModule } from 'ngx-toastr';
-
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
-import { MainComponent } from './main/main.component';
-import { FormsModule } from '@angular/forms';
-
+import { NgModule } from "@angular/core";
+import { HttpClientModule } from "@angular/common/http";
+import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MaterialModule, getTranslateModule } from "@exlibris/exl-cloudapp-angular-lib";
+import { ToastrModule } from "ngx-toastr";
+import { MatInputModule } from "@angular/material/input";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { AppComponent } from "./app.component";
+import { AppRoutingModule } from "./app-routing.module";
+import { MainComponent } from "./main/main.component";
+import { FormsModule } from "@angular/forms";
+import { MatSelectModule } from "@angular/material/select";
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { HelpComponent } from './help/help.component';
 export function getToastrModule() {
   return ToastrModule.forRoot({
-    positionClass: 'toast-top-right',
-    timeOut: 2000
+    positionClass: "toast-center-right",
+    timeOut: 2000,
   });
 }
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    MainComponent
-  ],
+  declarations: [AppComponent, MainComponent, HelpComponent],
   imports: [
     MaterialModule,
     BrowserModule,
@@ -29,10 +29,14 @@ export function getToastrModule() {
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatCheckboxModule,
     getTranslateModule(),
-    getToastrModule()
+    getToastrModule(),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
