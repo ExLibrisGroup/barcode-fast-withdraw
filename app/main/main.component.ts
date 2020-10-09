@@ -1,5 +1,5 @@
 import { Subscription, throwError } from "rxjs";
-import { catchError, map, switchMap } from "rxjs/operators";
+import { catchError, finalize, map, switchMap } from "rxjs/operators";
 import { ToastrService } from "ngx-toastr";
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import {
@@ -18,9 +18,9 @@ import {
 export class MainComponent {
   barcode: string = "";
   override = false;
-  holdings = "retain";
+  holdings:string = "retain";
   loading: boolean = false;
-  barcodesDeleted = [];
+  barcodesDeleted:string[] = [];
   constructor(private restService: CloudAppRestService, private toaster: ToastrService) {}
 
   onDelete() {
@@ -28,6 +28,10 @@ export class MainComponent {
     this.restService
       .call("/items?item_barcode=" + this.barcode)
       .pipe(
+        finalize(() => {
+          this.loading = false;
+          this.barcode = "";
+        }),
         switchMap((res) => {
           let requst: Request = {
             url: res.link,
@@ -38,18 +42,14 @@ export class MainComponent {
         })
       )
       .subscribe({
-        next: (result) => {
-          console.log("final", result),
-            this.toaster.success(this.barcode + " successfully withdrawn");
-            this.barcodesDeleted.unshift(this.barcode);
+        next: () => {
+          this.barcodesDeleted.unshift(this.barcode);
+          this.toaster.success(this.barcode + " successfully withdrawn");
         },
         error: (err: RestErrorResponse) => {
+          
           console.log(err.message),
-            this.toaster.error(this.barcode + " could not be withdrawn with error: " + err.message);
-        },
-        complete: () => {
-          this.loading = false;
-          this.barcode = "";
+          this.toaster.error(this.barcode + " could not be withdrawn with error: " + err.message);
         },
       });
   }

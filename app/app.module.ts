@@ -16,7 +16,7 @@ import { HelpComponent } from './help/help.component';
 export function getToastrModule() {
   return ToastrModule.forRoot({
     positionClass: "toast-center-right",
-    timeOut: 2000,
+    timeOut: 4000,
   });
 }
 

@@ -1,5 +1,6 @@
 {
    "id": "delete-app",
    "title": "delete app",
-   "description": "delete using barcode scanner"
+   "description": "delete using barcode scanner",
+   "author": "Liron Menda"
 }
