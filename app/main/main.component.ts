@@ -18,20 +18,17 @@ import {
 export class MainComponent {
   barcode: string = "";
   override = false;
-  holdings:string = "retain";
+  holdings: string = "retain";
   loading: boolean = false;
-  barcodesDeleted:string[] = [];
+  barcodesDeleted: string[] = [];
   constructor(private restService: CloudAppRestService, private toaster: ToastrService) {}
 
   onDelete() {
     console.log("onDelete");
+    this.loading = true;
     this.restService
       .call("/items?item_barcode=" + this.barcode)
       .pipe(
-        finalize(() => {
-          this.loading = false;
-          this.barcode = "";
-        }),
         switchMap((res) => {
           let requst: Request = {
             url: res.link,
@@ -44,12 +41,21 @@ export class MainComponent {
       .subscribe({
         next: () => {
           this.barcodesDeleted.unshift(this.barcode);
-          this.toaster.success(this.barcode + " successfully withdrawn");
+          this.toaster.success("Item with barcode : " + this.barcode + " successfully withdrawn");
         },
         error: (err: RestErrorResponse) => {
-          
           console.log(err.message),
-          this.toaster.error(this.barcode + " could not be withdrawn with error: " + err.message);
+            this.toaster.error(
+              "Item with barcode : " +
+                this.barcode +
+                " could not be withdrawn with error: " +
+                err.message
+            );
+            this.loading = false;
+        },
+        complete: () => {
+          this.barcode = "";
+          this.loading = false;
         },
       });
   }
