@@ -2,5 +2,8 @@
    "id": "delete-app",
    "title": "delete app",
    "description": "delete using barcode scanner",
-   "author": "Liron Menda"
+   "author": "Liron Menda",
+   "pages": {
+      "help": "/#/help"
+   }
 }

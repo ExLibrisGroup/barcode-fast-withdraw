@@ -1,7 +1,7 @@
 import { Subscription, throwError } from "rxjs";
 import { catchError, finalize, map, switchMap } from "rxjs/operators";
 import { ToastrService } from "ngx-toastr";
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from "@angular/core";
 import {
   CloudAppRestService,
   CloudAppEventsService,
@@ -9,6 +9,7 @@ import {
   HttpMethod,
   RestErrorResponse,
 } from "@exlibris/exl-cloudapp-angular-lib";
+import { MatInput } from "@angular/material/input";
 
 @Component({
   selector: "app-main",
@@ -16,6 +17,7 @@ import {
   styleUrls: ["./main.component.scss"],
 })
 export class MainComponent {
+  @ViewChild("barcodeVar", { static: false }) barcodeEl: ElementRef;
   barcode: string = "";
   override = false;
   holdings: string = "retain";
@@ -51,11 +53,15 @@ export class MainComponent {
                 " could not be withdrawn with error: " +
                 err.message
             );
-            this.loading = false;
+          this.loading = false;
+          ;
+          (this.barcodeEl?.nativeElement as MatInput ).focus();
+
         },
         complete: () => {
           this.barcode = "";
           this.loading = false;
+          (this.barcodeEl?.nativeElement as MatInput ).focus();
         },
       });
   }
