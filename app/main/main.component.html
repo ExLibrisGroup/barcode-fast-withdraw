@@ -5,7 +5,7 @@
   <form #f="ngForm">
     <mat-form-field id="barcode" appearance="standard">
       <mat-label>Barcode</mat-label>
-      <input matInput name="barcode" [(ngModel)]="barcode"  (keydown.enter)="onDelete()" [disabled]="loading" #barcodeVar/>
+      <input matInput autofocus name="barcode" [(ngModel)]="barcode"  (keydown.enter)="onDelete()" [disabled]="loading" #barcodeVar/>
     </mat-form-field>
     <button mat-stroked-button color="primary" type="button" (click)="onDelete()" [disabled]="loading">Delete</button>
     <mat-form-field appearance="standard" id="holdings">
