@@ -1,7 +1,14 @@
 import { Subscription, throwError } from "rxjs";
 import { catchError, finalize, map, switchMap } from "rxjs/operators";
 import { ToastrService } from "ngx-toastr";
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  ElementRef,
+  ChangeDetectorRef,
+} from "@angular/core";
 import {
   CloudAppRestService,
   CloudAppEventsService,
@@ -17,13 +24,25 @@ import { MatInput } from "@angular/material/input";
   styleUrls: ["./main.component.scss"],
 })
 export class MainComponent {
-  @ViewChild("barcodeVar", { static: false }) barcodeEl: ElementRef;
+  @ViewChild("barcodeVar", { static: true }) barcodeEl: MatInput;
   barcode: string = "";
   override = false;
   holdings: string = "retain";
   loading: boolean = false;
   barcodesDeleted: string[] = [];
   constructor(private restService: CloudAppRestService, private toaster: ToastrService) {}
+  ngOnInit() {
+  }
+  ngAfterViewInit() {
+    setTimeout(() => {this.barcodeEl._focusChanged(true);this.barcodeEl.focus()});  
+  }
+
+  reset() {
+    this.barcode = "";
+    this.loading = false;
+    // document.getElementById("barcode").focus({ preventScroll: true });
+    setTimeout(() => this.barcodeEl.focus(), 300);
+  }
 
   onDelete() {
     console.log("onDelete");
@@ -53,15 +72,10 @@ export class MainComponent {
                 " could not be withdrawn with error: " +
                 err.message
             );
-          this.loading = false;
-          ;
-          (this.barcodeEl?.nativeElement as MatInput ).focus();
-
+          this.reset();
         },
         complete: () => {
-          this.barcode = "";
-          this.loading = false;
-          (this.barcodeEl?.nativeElement as MatInput ).focus();
+          this.reset();
         },
       });
   }
