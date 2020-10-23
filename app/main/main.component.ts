@@ -40,11 +40,15 @@ export class MainComponent {
   reset() {
     this.barcode = "";
     this.loading = false;
-    // document.getElementById("barcode").focus({ preventScroll: true });
     setTimeout(() => this.barcodeEl.focus(), 300);
   }
 
   onDelete() {
+    if(this.barcode==="")
+    {
+      this.toaster.error("Please enter barcode")
+      return;
+    }
     console.log("onDelete");
     this.loading = true;
     this.restService

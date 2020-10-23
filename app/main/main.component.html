@@ -1,15 +1,15 @@
 <section>
-  <h1>Welcome to delete by barcode</h1>
+  <h1>Scan barcode to delete item</h1>
 </section>
 <section>
   <form #f="ngForm">
     <mat-form-field id="barcode-field"  appearance="standard">
       <mat-label>Barcode</mat-label>
-      <input matInput id="barcode" name="barcode" [(ngModel)]="barcode"  (keydown.enter)="onDelete()" [disabled]="loading" #barcodeVar="matInput"/>
+      <input matInput id="barcode" name="barcode" [(ngModel)]="barcode"  (keydown.enter)="onDelete()" [disabled]="loading" #barcodeVar="matInput"  />
     </mat-form-field>
     <!-- <button mat-stroked-button color="primary" type="button" (click)="reset()" [disabled]="loading">reset</button> -->
 
-    <button mat-stroked-button color="primary" type="button" (click)="onDelete()" [disabled]="loading">Delete</button>
+    <button mat-stroked-button color="primary" type="button" (click)="onDelete()" [disabled]="loading || barcode===''">Delete</button>
     <mat-form-field appearance="standard" id="holdings">
       <mat-label>Holdings</mat-label>
       <mat-select name="holdings" [(ngModel)]="holdings">
