@@ -1,8 +1,8 @@
 <section>
   <h1>Scan barcode to delete item</h1>
 </section>
-<section>
-  <form #f="ngForm">
+<section [hidden]="loading">
+  <form #f="ngForm" >
     <mat-form-field id="barcode-field"  appearance="standard">
       <mat-label>Barcode</mat-label>
       <input matInput id="barcode" name="barcode" [(ngModel)]="barcode"  (keydown.enter)="onDelete()" [disabled]="loading" #barcodeVar="matInput"  />
@@ -12,13 +12,13 @@
     <button mat-stroked-button color="primary" type="button" (click)="onDelete()" [disabled]="loading || barcode===''">Delete</button>
     <mat-form-field appearance="standard" id="holdings">
       <mat-label>Holdings</mat-label>
-      <mat-select name="holdings" [(ngModel)]="holdings">
+      <mat-select name="holdings" (selectionChange)="onChangeSettings()" [(ngModel)]="storeSettings.holdings">
         <mat-option *ngFor="let item of ['retain', 'delete', 'suppress']" [value]="item">{{
           item | titlecase
         }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-checkbox name="override" labelPosition="before" [(ngModel)]="override"
+    <mat-checkbox name="override" (change)="onChangeSettings()" labelPosition="before" [(ngModel)]="storeSettings.override"
       >Override</mat-checkbox
     >
   </form>
@@ -36,3 +36,6 @@
   </div>
   </ul>
 </section>
+<div class="center" *ngIf="loading" #loading_spinner>
+  <mat-progress-spinner mode="indeterminate" diameter="50"> </mat-progress-spinner>
+</div>

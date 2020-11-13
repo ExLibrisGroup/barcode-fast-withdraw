@@ -8,6 +8,7 @@ import {
   ViewChild,
   ElementRef,
   ChangeDetectorRef,
+  AfterViewInit,
 } from "@angular/core";
 import {
   CloudAppRestService,
@@ -15,26 +16,50 @@ import {
   Request,
   HttpMethod,
   RestErrorResponse,
+  CloudAppStoreService,
 } from "@exlibris/exl-cloudapp-angular-lib";
 import { MatInput } from "@angular/material/input";
 
+class StoreSettings {
+  holdings: string = "retain";
+  override: boolean = false;
+}
 @Component({
   selector: "app-main",
   templateUrl: "./main.component.html",
   styleUrls: ["./main.component.scss"],
 })
-export class MainComponent {
+export class MainComponent implements OnInit, AfterViewInit {
   @ViewChild("barcodeVar", { static: true }) barcodeEl: MatInput;
   barcode: string = "";
-  override = false;
-  holdings: string = "retain";
+  storeSettings = new StoreSettings();
   loading: boolean = false;
   barcodesDeleted: string[] = [];
-  constructor(private restService: CloudAppRestService, private toaster: ToastrService) {}
+  constructor(
+    private restService: CloudAppRestService,
+    private storeService: CloudAppStoreService,
+    private toaster: ToastrService
+  ) {}
+
   ngOnInit() {
+    this.loading = true;
+    this.storeService
+      .get("settings")
+      .subscribe({
+        next: (res) =>{ if (res){Object.keys(res).length > 0 ? (this.storeSettings = res) : null;}
+        this.loading = false;},
+      });
   }
   ngAfterViewInit() {
-    setTimeout(() => {this.barcodeEl._focusChanged(true);this.barcodeEl.focus()});  
+    setTimeout(() => {
+      this.barcodeEl._focusChanged(true);
+      this.barcodeEl.focus();
+    });
+  }
+  onChangeSettings() {
+    this.storeService
+      .set("settings", this.storeSettings)
+      .subscribe(() => console.log("Stored settings"));
   }
 
   reset() {
@@ -44,9 +69,8 @@ export class MainComponent {
   }
 
   onDelete() {
-    if(this.barcode==="")
-    {
-      this.toaster.error("Please enter barcode")
+    if (this.barcode === "") {
+      this.toaster.error("Please enter barcode");
       return;
     }
     console.log("onDelete");
@@ -58,7 +82,7 @@ export class MainComponent {
           let requst: Request = {
             url: res.link,
             method: HttpMethod.DELETE,
-            queryParams: { override: this.override, holdings: this.holdings },
+            queryParams: { override: this.storeSettings.override, holdings: this.storeSettings.holdings },
           };
           return this.restService.call(requst);
         })
