@@ -1,7 +1,10 @@
 <section>
   <h1>Scan barcode to delete item</h1>
 </section>
-<section [hidden]="loading">
+<div class="loading-shade" *ngIf="loading" #loading_spinner>
+  <mat-progress-spinner mode="indeterminate" diameter="50"> </mat-progress-spinner>
+</div>
+<section >
   <form #f="ngForm" >
     <mat-form-field id="barcode-field"  appearance="standard">
       <mat-label>Barcode</mat-label>
@@ -23,12 +26,8 @@
     >
   </form>
 </section>
-<section>
-  <hr />
-  <a [routerLink]="['help']">How to use ?</a>
-</section>
 <section *ngIf="barcodesDeleted.length>0">
-  <h2 style="color:green">Barcodes Deleted</h2>
+  <h2 style="color:green">Items Deleted</h2>
   <ul style="padding: 1px; list-style-type: none;">
   <div *ngFor="let barcode of barcodesDeleted">
     <li>{{barcode}}</li>
@@ -36,6 +35,6 @@
   </div>
   </ul>
 </section>
-<div class="center" *ngIf="loading" #loading_spinner>
-  <mat-progress-spinner mode="indeterminate" diameter="50"> </mat-progress-spinner>
-</div>
+<section id='footer'>
+  <a [routerLink]="['help']">How to use ?</a>
+</section>

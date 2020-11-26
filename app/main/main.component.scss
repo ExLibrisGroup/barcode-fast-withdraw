@@ -50,3 +50,26 @@ textarea {
   -webkit-transform: translateX(-50%) translateY(-50%);
   transform: translateX(-50%) translateY(-50%);
 }
+/* Footer */
+#page-container {
+  display: flex;
+  min-height: 90vh;
+  flex-direction: column;
+}
+#content-wrap {
+  margin-bottom: 38px;
+  flex-grow: 1;
+}
+#footer {
+  width: 100%;
+  background-color: #E5E5E5;
+  padding: 5px 10px;
+}
+#footer p {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+#footer a {  
+  cursor: pointer;
+}

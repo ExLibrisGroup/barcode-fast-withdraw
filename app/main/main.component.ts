@@ -1,22 +1,17 @@
-import { Subscription, throwError } from "rxjs";
-import { catchError, finalize, map, switchMap } from "rxjs/operators";
-import { ToastrService } from "ngx-toastr";
+import {  switchMap } from "rxjs/operators";
 import {
   Component,
   OnInit,
-  OnDestroy,
   ViewChild,
-  ElementRef,
-  ChangeDetectorRef,
   AfterViewInit,
 } from "@angular/core";
 import {
   CloudAppRestService,
-  CloudAppEventsService,
   Request,
   HttpMethod,
   RestErrorResponse,
   CloudAppStoreService,
+  AlertService,
 } from "@exlibris/exl-cloudapp-angular-lib";
 import { MatInput } from "@angular/material/input";
 
@@ -38,7 +33,7 @@ export class MainComponent implements OnInit, AfterViewInit {
   constructor(
     private restService: CloudAppRestService,
     private storeService: CloudAppStoreService,
-    private toaster: ToastrService
+    private alert: AlertService
   ) {}
 
   ngOnInit() {
@@ -70,7 +65,7 @@ export class MainComponent implements OnInit, AfterViewInit {
 
   onDelete() {
     if (this.barcode === "") {
-      this.toaster.error("Please enter barcode");
+      this.alert.error("Please enter barcode");
       return;
     }
     console.log("onDelete");
@@ -90,11 +85,11 @@ export class MainComponent implements OnInit, AfterViewInit {
       .subscribe({
         next: () => {
           this.barcodesDeleted.unshift(this.barcode);
-          this.toaster.success("Item with barcode : " + this.barcode + " successfully withdrawn");
+          this.alert.success("Item with barcode : " + this.barcode + " successfully withdrawn");
         },
         error: (err: RestErrorResponse) => {
           console.log(err.message),
-            this.toaster.error(
+            this.alert.error(
               "Item with barcode : " +
                 this.barcode +
                 " could not be withdrawn with error: " +

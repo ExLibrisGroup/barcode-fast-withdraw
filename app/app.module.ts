@@ -13,9 +13,10 @@ import { FormsModule } from "@angular/forms";
 import { MatSelectModule } from "@angular/material/select";
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { HelpComponent } from './help/help.component';
+import  {AlertModule} from '@exlibris/exl-cloudapp-angular-lib';
 export function getToastrModule() {
   return ToastrModule.forRoot({
-    positionClass: "toast-center-right",
+    positionClass: "toast-top-right",
     timeOut: 4000,
   });
 }
@@ -23,6 +24,7 @@ export function getToastrModule() {
 @NgModule({
   declarations: [AppComponent, MainComponent, HelpComponent],
   imports: [
+    AlertModule,
     MaterialModule,
     BrowserModule,
     BrowserAnimationsModule,
