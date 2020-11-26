@@ -1,6 +1,7 @@
 {
    "id": "delete-app",
    "title": "Quick Delete Item",
+   "subtitle": "Quick delete of item using barcode scanner",
    "description": "Delete item by scan of barcode",
    "author": "Liron Menda",
    "pages": {
