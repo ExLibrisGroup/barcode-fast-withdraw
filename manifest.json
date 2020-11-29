@@ -1,6 +1,21 @@
 {
    "id": "delete-app",
-   "title": "delete app",
-   "description": "delete using barcode scanner",
-   "author": "Liron Menda"
+   "title": "Quick Delete Item",
+   "subtitle": "Quick delete of item using barcode scanner",
+   "description": "Delete item by scan of barcode",
+   "author": "Liron Menda",
+   "pages": {
+      "help": "/#/help"
+   },
+   "icon": {
+      "type": "font",
+      "value": "fa fa-eraser"
+   },
+   "contentSecurity": {
+      "connectSrc": [
+      ],
+      "sandbox": {
+         "popups": true
+      }
+   }
 }
