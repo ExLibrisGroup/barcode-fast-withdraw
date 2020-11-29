@@ -1,0 +1,38 @@
+  <h1>Scan barcode to delete an item</h1>
+<div class="loading-shade" *ngIf="loading" #loading_spinner>
+  <mat-progress-spinner mode="indeterminate" diameter="50"> </mat-progress-spinner>
+</div>
+<section >
+  <form #f="ngForm" >
+    <mat-form-field id="barcode-field"  appearance="standard">
+      <mat-label>Barcode</mat-label>
+      <input matInput id="barcode" name="barcode" [(ngModel)]="barcode"  (keydown.enter)="onDelete()" [disabled]="loading" #barcodeVar="matInput"  />
+    </mat-form-field>
+    <!-- <button mat-stroked-button color="primary" type="button" (click)="reset()" [disabled]="loading">reset</button> -->
+
+    <button mat-stroked-button color="primary" type="button" (click)="onDelete()" [disabled]="loading || barcode===''">Delete</button>
+    <mat-form-field appearance="standard" id="holdings">
+      <mat-label>Holdings</mat-label>
+      <mat-select name="holdings" (selectionChange)="onChangeSettings()" [(ngModel)]="storeSettings.holdings">
+        <mat-option *ngFor="let item of ['retain', 'delete', 'suppress']" [value]="item">{{
+          item | titlecase
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-checkbox name="override" (change)="onChangeSettings()" labelPosition="before" [(ngModel)]="storeSettings.override"
+      >Override</mat-checkbox
+    >
+  </form>
+</section>
+<section *ngIf="barcodesDeleted.length>0">
+  <h2 style="color:green">Items Deleted</h2>
+  <ul style="padding: 1px; list-style-type: none;">
+  <div *ngFor="let barcode of barcodesDeleted">
+    <li>{{barcode}}</li>
+    <br>
+  </div>
+  </ul>
+</section>
+<section id='footer'>
+  <a [routerLink]="['help']">How to use ?</a>
+</section>

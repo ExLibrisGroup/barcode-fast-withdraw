@@ -1,0 +1,34 @@
+<div class="title">
+  <h1>Help</h1>
+
+  <a [routerLink]="['']" style="float: right">
+    <button mat-raised-button color="primary"><mat-icon>arrow_back</mat-icon>Back</button>
+  </a>
+</div>
+<h2>How to use?</h2>
+<p>
+  Place your cursor on the barcode field, Now you can scan and it will withdraw the item. If you
+  want to delete by manual typing , you may type and press the delete button.
+</p>
+<h2>Parameters</h2>
+<ul style="list-style-type: none; padding: 0;">
+  <li>
+    Override : Indication whether the item should be deleted even if warnings exist. Optional. By
+    default: false
+  </li>
+  <br>
+  <li>
+    Holdings : Method for handling a Holdings record left without any items: retain, delete or
+    suppress. Optional. By default: retain.
+  </li>
+</ul>
+<h2>Issues</h2>
+<p>
+  For more help with this app, or to report a problem, please open an issue by clicking on the
+  link below.
+</p>
+<p>
+  <a translate href="https://github.com/ExLibrisGroup/barcode-fast-withdraw/issues" target="_blank"
+    >Open an issue</a
+  >
+</p>
