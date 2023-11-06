@@ -19,6 +19,16 @@
         }}</mat-option>
       </mat-select>
     </mat-form-field>
+    <mat-form-field appearance="standard" id="bibs" *ngIf="storeSettings.holdings == 'delete'">
+      <mat-label >Bibs</mat-label>
+      <mat-select name="bibs" (selectionChange)="onChangeSettings()" [(ngModel)]="storeSettings.bibs">
+        <mat-option *ngFor="let item of ['retain', 'delete', 'suppress']" [value]="item">{{
+          item | titlecase
+        }}</mat-option>
+      </mat-select>
+
+    </mat-form-field>
+
     <mat-checkbox name="override" (change)="onChangeSettings()" labelPosition="before" [(ngModel)]="storeSettings.override"
       >Override</mat-checkbox
     >

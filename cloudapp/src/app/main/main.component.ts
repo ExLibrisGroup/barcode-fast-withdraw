@@ -17,6 +17,7 @@ import { MatInput } from "@angular/material/input";
 
 class StoreSettings {
   holdings: string = "retain";
+  bibs: string = "retain";
   override: boolean = false;
 }
 @Component({
@@ -52,6 +53,9 @@ export class MainComponent implements OnInit, AfterViewInit {
     });
   }
   onChangeSettings() {
+    if(this.storeSettings.holdings != 'delete'){
+      this.storeSettings.bibs = 'retain';
+    }
     this.storeService
       .set("settings", this.storeSettings)
       .subscribe(() => console.log("Stored settings"));
@@ -77,7 +81,7 @@ export class MainComponent implements OnInit, AfterViewInit {
           let requst: Request = {
             url: res.link,
             method: HttpMethod.DELETE,
-            queryParams: { override: this.storeSettings.override, holdings: this.storeSettings.holdings },
+            queryParams: { override: this.storeSettings.override, holdings: this.storeSettings.holdings, bibs: this.storeSettings.bibs },
           };
           return this.restService.call(requst);
         })
