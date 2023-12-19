@@ -81,7 +81,7 @@ export class MainComponent implements OnInit, AfterViewInit {
           let requst: Request = {
             url: res.link,
             method: HttpMethod.DELETE,
-            queryParams: { override: this.storeSettings.override, holdings: this.storeSettings.holdings, bibs: this.storeSettings.bibs },
+            queryParams: { override: this.storeSettings.override, holdings: this.storeSettings.holdings, bib: this.storeSettings.bibs },
           };
           return this.restService.call(requst);
         })
